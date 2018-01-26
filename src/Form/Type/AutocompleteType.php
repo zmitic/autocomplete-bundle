@@ -53,12 +53,13 @@ class AutocompleteType extends AbstractType
         $view->vars['form_field'] = $form->getName();
         $view->vars['debounce'] = $options['debounce'];
 
+        $suggestions = call_user_func($options['suggestions']);
         $suggestionsValues = array_map(function ($entity) {
             return [
                 'id' => (string)$entity->getId(),
                 'value' => (string)$entity,
             ];
-        }, $options['suggestions']);
+        }, $suggestions);
         $view->vars['suggestions'] = $suggestionsValues;
     }
 
@@ -94,11 +95,13 @@ class AutocompleteType extends AbstractType
             'not_found' => function () {
                 throw new TransformationFailedException('Object not found.');
             },
-            'suggestions' => [],
+            'suggestions' => function () {
+                return [];
+            }
         ]);
 
         $resolver->setAllowedTypes('search', 'callable');
-        $resolver->setAllowedTypes('suggestions', 'array');
+        $resolver->setAllowedTypes('suggestions', 'callable');
         $resolver->setAllowedTypes('find_one_by_id', 'callable');
         $resolver->setAllowedTypes('find_one_by_value', 'callable');
         $resolver->setAllowedTypes('not_found', 'callable');
