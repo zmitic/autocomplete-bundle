@@ -2,6 +2,7 @@
     <div class="wjb-autocomplete"
          data-form-class="{{ form.vars.form_class }}"
          data-form-field="{{ form.vars.form_field }}"
+         data-debounce="{{ form.vars.debounce }}"
          data-remote-url="{{ path('wjb_autocomplete_search', {'search': '_QUERY_', 'form_class': form.vars.form_class, 'form_field': form.vars.form_field}) }}"
          data-suggestions='{{ suggestions|json_encode }}'>
 

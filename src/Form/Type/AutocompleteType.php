@@ -26,7 +26,7 @@ class AutocompleteType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', TextType::class, [
+        $builder->add('id', HiddenType::class, [
             'attr' => [
                 'data-id' => '',
                 'autocomplete' => 'off',
@@ -51,6 +51,7 @@ class AutocompleteType extends AbstractType
 
         $view->vars['form_class'] = get_class($parentInstance);
         $view->vars['form_field'] = $form->getName();
+        $view->vars['debounce'] = $options['debounce'];
 
         $suggestionsValues = array_map(function ($entity) {
             return [
@@ -58,7 +59,6 @@ class AutocompleteType extends AbstractType
                 'value' => (string)$entity,
             ];
         }, $options['suggestions']);
-
         $view->vars['suggestions'] = $suggestionsValues;
     }
 
@@ -81,6 +81,7 @@ class AutocompleteType extends AbstractType
         });
 
         $resolver->setDefaults([
+            'debounce' => 100,
             'error_mapping' => [
                 '.' => 'value',
             ],
@@ -91,30 +92,17 @@ class AutocompleteType extends AbstractType
             },
             // this callback will receive $search parameter
             'not_found' => function () {
-                throw new TransformationFailedException(sprintf('Object not found.'));
+                throw new TransformationFailedException('Object not found.');
             },
             'suggestions' => [],
         ]);
 
-        $resolver->setAllowedTypes(
-            'search', 'callable'
-        );
-
-        $resolver->setAllowedTypes(
-            'suggestions', 'array'
-        );
-
-        $resolver->setAllowedTypes(
-            'find_one_by_id', 'callable'
-        );
-
-        $resolver->setAllowedTypes(
-            'find_one_by_value', 'callable'
-        );
-
-        $resolver->setAllowedTypes(
-            'not_found', 'callable'
-        );
+        $resolver->setAllowedTypes('search', 'callable');
+        $resolver->setAllowedTypes('suggestions', 'array');
+        $resolver->setAllowedTypes('find_one_by_id', 'callable');
+        $resolver->setAllowedTypes('find_one_by_value', 'callable');
+        $resolver->setAllowedTypes('not_found', 'callable');
+        $resolver->setAllowedTypes('debounce', 'int');
     }
 }
 

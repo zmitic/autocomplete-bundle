@@ -16,7 +16,6 @@ class wjbAutocompleteExtension extends Extension implements PrependExtensionInte
         $loader->load('services.yml');
     }
 
-
     public function prepend(ContainerBuilder $container)
     {
         $themes = ['@wjbAutocomplete/form/autocomplete.html.twig'];
