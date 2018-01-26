@@ -1,0 +1,37 @@
+framework:
+    test: true
+    secret: test
+    router:
+        resource: "%kernel.root_dir%/config/test_routing.yml"
+#
+#twig:
+#    paths:
+#        - '%kernel.root_dir%/Resources/views': wjbAutocomplete
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        path:     ':memory:'
+        memory:   true
+
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
+        mappings:
+            wjbAutocompleteBundle:
+                is_bundle: false
+                type: annotation
+                dir: 'Tests/Fixtures/Entity'
+                prefix: 'wjb\AutocompleteBundle\Tests\Fixtures\Entity'
+                alias: wjb
+
+services:
+    _defaults:
+        autoconfigure: true
+
+    wjb\AutocompleteBundle\Tests\Fixtures\Form\Config\CategoriesAutocompleteConfig: ~
+
+    wjb\AutocompleteBundle\Tests\Fixtures\Form\Type\ProductType:
+        arguments: ['@doctrine.orm.entity_manager']
+
+

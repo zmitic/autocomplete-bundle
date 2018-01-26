@@ -1,0 +1,10 @@
+{
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "bloodhound-js": "^1.2.2",
+        "bootstrap-sass": "^3.3.7",
+        "typeahead.js": "^0.11.1",
+        "typeahead.js-bootstrap-css": "^1.2.1"
+    }
+}

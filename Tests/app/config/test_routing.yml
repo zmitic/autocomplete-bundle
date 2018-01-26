@@ -1,0 +1,7 @@
+wjb_autocomplete_search:
+    path:     /wjb/autocomplete/search
+    controller: wjb\AutocompleteBundle\Controller\AutocompleteController::search
+
+wjb_autocomplete_test:
+    path:     /test/{id}
+    controller: wjb\AutocompleteBundle\Tests\Fixtures\Controller\TestController::testAction
