@@ -6,8 +6,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ObjectToDisplayValueConverter
 {
-
-    public static function convertObject($entity, $display)
+    public static function convertToValue($entity, $display)
     {
         if (null === $display) {
             return (string)$entity;

@@ -25,8 +25,7 @@ class AutocompleteTransformer implements DataTransformerInterface
 
         return [
             'id' => $entity->getId(),
-            'value' => ObjectToDisplayValueConverter::convertObject($entity, $this->options['displau']),
-//            'value' => (string)$entity,
+            'value' => ObjectToDisplayValueConverter::convertToValue($entity, $this->options['display']),
         ];
     }
 

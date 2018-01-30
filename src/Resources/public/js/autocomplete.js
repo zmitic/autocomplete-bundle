@@ -1,6 +1,6 @@
 
-require('./typeahead.bundle');
 var $ = require('jquery');
+require('./typeahead.bundle');
 var Bloodhound = require('./typeahead.bundle');
 
 // when created dynamically
@@ -26,8 +26,8 @@ function init(element) {
     var bloodhoundSuggestions = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        identify: function (a) {
-            return a.id;
+        identify: function (match) {
+            return match.id;
         },
         sufficient: 3,
         local: suggestions,

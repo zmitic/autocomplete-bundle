@@ -27,7 +27,7 @@ class AutocompleteController extends AbstractController
         $map = array_map(function ($entity) use ($displayConfig) {
             return [
                 'id' => (string)$entity->getId(),
-                'value' => ObjectToDisplayValueConverter::convertObject($entity, $displayConfig),
+                'value' => ObjectToDisplayValueConverter::convertToValue($entity, $displayConfig),
             ];
         }, $results);
 

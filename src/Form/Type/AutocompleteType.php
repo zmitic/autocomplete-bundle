@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use wjb\AutocompleteBundle\Form\Transformer\AutocompleteTransformer;
+use wjb\AutocompleteBundle\Helper\ObjectToDisplayValueConverter;
 
 class AutocompleteType extends AbstractType
 {
@@ -53,11 +54,12 @@ class AutocompleteType extends AbstractType
         $view->vars['form_field'] = base64_encode($form->getName());
         $view->vars['debounce'] = $options['debounce'];
 
+        $display = $options['display'];
         $suggestions = call_user_func($options['suggestions']);
-        $suggestionsValues = array_map(function ($entity) {
+        $suggestionsValues = array_map(function ($entity) use ($display) {
             return [
                 'id' => (string)$entity->getId(),
-                'value' => (string)$entity,
+                'value' => ObjectToDisplayValueConverter::convertToValue($entity, $display),
             ];
         }, $suggestions);
         $view->vars['suggestions'] = $suggestionsValues;
@@ -83,11 +85,11 @@ class AutocompleteType extends AbstractType
         $resolver->setDefaults([
             'class' => null,
             'display' => null,
-            'debounce' => 100,
+            'debounce' => 300,
             'error_mapping' => [
                 '.' => 'value',
             ],
-            'invalid_message' => 'Transformation failed',
+            'invalid_message' => 'This value is not valid, please select one from available choices',
             // if not found in DB, try looking by other columns
             'find_one_by_value' => function () {
                 return null;
@@ -98,7 +100,7 @@ class AutocompleteType extends AbstractType
             },
             'suggestions' => function () {
                 return [];
-            }
+            },
         ]);
 
         $resolver->setAllowedTypes('class', ['string', 'null']);
