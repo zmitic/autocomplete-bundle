@@ -3,7 +3,7 @@
          data-form-class="{{ form.vars.form_class }}"
          data-form-field="{{ form.vars.form_field }}"
          data-debounce="{{ form.vars.debounce }}"
-         data-remote-url="{{ path('wjb_autocomplete_search', {'search': '_QUERY_', 'form_class': form.vars.form_class, 'form_field': form.vars.form_field}) }}"
+         data-remote-url="{{ path('wjb_autocomplete_suggestions', {'search': '_QUERY_', 'fc': form.vars.form_class, 'ff': form.vars.form_field}) }}"
          data-suggestions='{{ suggestions|json_encode }}'>
 
         {{ form_rest(form) }}

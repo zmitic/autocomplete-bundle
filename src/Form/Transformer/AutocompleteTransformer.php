@@ -3,6 +3,7 @@
 namespace wjb\AutocompleteBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use wjb\AutocompleteBundle\Helper\ObjectToDisplayValueConverter;
 
 class AutocompleteTransformer implements DataTransformerInterface
 {
@@ -24,7 +25,8 @@ class AutocompleteTransformer implements DataTransformerInterface
 
         return [
             'id' => $entity->getId(),
-            'value' => (string)$entity,
+            'value' => ObjectToDisplayValueConverter::convertObject($entity, $this->options['displau']),
+//            'value' => (string)$entity,
         ];
     }
 

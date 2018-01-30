@@ -1,7 +1,7 @@
 
-require('typeahead.js');
+require('./typeahead.bundle');
 var $ = require('jquery');
-var Bloodhound = require('bloodhound-js');
+var Bloodhound = require('./typeahead.bundle');
 
 // when created dynamically
 $(document).on('DOMNodeInserted', '.wjb-autocomplete', function (e) {
@@ -20,32 +20,21 @@ function init(element) {
     var valueField = element.find('[data-value]');
     var idField = element.find('[data-id]');
 
-    var remoteUrl = element.attr('data-remote-url');
     var suggestionsAsString = element.attr('data-suggestions');
     var suggestions = JSON.parse(suggestionsAsString);
-    var debounce = element.attr('data-debounce');
 
     var bloodhoundSuggestions = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
+        identify: function (a) {
+            return a.id;
+        },
         sufficient: 3,
         local: suggestions,
         remote: {
-            url: remoteUrl,
+            url: element.attr('data-remote-url'),
             wildcard: '_QUERY_',
-            rateLimitWait: debounce,
-            filter: function (response) {
-                return $.grep(response, function (object) {
-                    var isObjectInSuggestions = false;
-                    $.each(suggestions, function (index, suggestion) {
-                        if (suggestion.id === object.id) {
-                            isObjectInSuggestions = true;
-                        }
-                    });
-
-                    return !isObjectInSuggestions;
-                });
-            }
+            rateLimitWait: element.attr('data-debounce')
         }
     });
 

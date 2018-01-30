@@ -49,8 +49,8 @@ class AutocompleteType extends AbstractType
         }
         $parentInstance = $parent->getConfig()->getType()->getInnerType();
 
-        $view->vars['form_class'] = get_class($parentInstance);
-        $view->vars['form_field'] = $form->getName();
+        $view->vars['form_class'] = base64_encode(get_class($parentInstance));
+        $view->vars['form_field'] = base64_encode($form->getName());
         $view->vars['debounce'] = $options['debounce'];
 
         $suggestions = call_user_func($options['suggestions']);
@@ -66,7 +66,6 @@ class AutocompleteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            'class',
             'search',
         ]);
 
@@ -82,6 +81,8 @@ class AutocompleteType extends AbstractType
         });
 
         $resolver->setDefaults([
+            'class' => null,
+            'display' => null,
             'debounce' => 100,
             'error_mapping' => [
                 '.' => 'value',
@@ -100,6 +101,8 @@ class AutocompleteType extends AbstractType
             }
         ]);
 
+        $resolver->setAllowedTypes('class', ['string', 'null']);
+        $resolver->setAllowedTypes('display', ['string', 'null', 'callable']);
         $resolver->setAllowedTypes('search', 'callable');
         $resolver->setAllowedTypes('suggestions', 'callable');
         $resolver->setAllowedTypes('find_one_by_id', 'callable');
