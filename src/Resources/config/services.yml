@@ -1,13 +1,19 @@
 services:
-    wjb.autocomplete.autocomplete_entity_type:
+    wjb_autocomplete.autocomplete_entity_type:
         class: wjb\AutocompleteBundle\Form\Type\AutocompleteType
-        arguments: ['@?doctrine.orm.entity_manager']
+        arguments: ['@wjb_autocomplete.object_transformer', '@?doctrine.orm.entity_manager']
         tags:
             - { name: 'form.type' }
 
-    wjb.autocomplete.autocomplete_config_locator:
+    wjb_autocomplete.autocomplete_config_locator:
         class: Symfony\Component\DependencyInjection\ServiceLocator
         tags: ['container.service_locator']
         arguments: ['injected']
+
+    wjb_autocomplete.object_transformer:
+        class: wjb\AutocompleteBundle\Service\ObjectTransformer
+        arguments: ['@property_accessor']
+        public: true
+
 
 

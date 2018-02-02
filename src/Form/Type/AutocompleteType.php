@@ -13,16 +13,20 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use wjb\AutocompleteBundle\Form\Transformer\AutocompleteTransformer;
-use wjb\AutocompleteBundle\Helper\ObjectToDisplayValueConverter;
+use wjb\AutocompleteBundle\Service\ObjectTransformer;
 
 class AutocompleteType extends AbstractType
 {
+    /** @var ObjectTransformer */
+    private $objectTransformer;
+
     /** @var EntityManagerInterface|null */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager = null)
+    public function __construct(ObjectTransformer $objectTransformer, EntityManagerInterface $entityManager = null)
     {
         $this->entityManager = $entityManager;
+        $this->objectTransformer = $objectTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,7 +43,7 @@ class AutocompleteType extends AbstractType
             ],
             'label' => false,
         ]);
-        $builder->addModelTransformer(new AutocompleteTransformer($options));
+        $builder->addModelTransformer(new AutocompleteTransformer($options, $this->objectTransformer));
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -59,7 +63,7 @@ class AutocompleteType extends AbstractType
         $suggestionsValues = array_map(function ($entity) use ($display) {
             return [
                 'id' => (string)$entity->getId(),
-                'value' => ObjectToDisplayValueConverter::convertToValue($entity, $display),
+                'value' => $this->objectTransformer->convertToValue($entity, $display),
             ];
         }, $suggestions);
         $view->vars['suggestions'] = $suggestionsValues;

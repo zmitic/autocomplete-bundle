@@ -13,13 +13,13 @@ class AutocompleteConfigLocatorPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('wjb.autocomplete.autocomplete_config_locator')) {
+        if (!$container->hasDefinition('wjb_autocomplete.autocomplete_config_locator')) {
             return;
         }
 
-        $definition = $container->getDefinition('wjb.autocomplete.autocomplete_config_locator');
+        $definition = $container->getDefinition('wjb_autocomplete.autocomplete_config_locator');
         /** @var Reference[] $taggedConfigDefinitions */
-        $taggedConfigDefinitions = $this->findAndSortTaggedServices('wjb.autocomplete.config', $container);
+        $taggedConfigDefinitions = $this->findAndSortTaggedServices('wjb_autocomplete.config', $container);
 
         $configs = [];
         foreach ($taggedConfigDefinitions as $taggedConfigDefinition) {

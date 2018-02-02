@@ -4,15 +4,15 @@ require('./typeahead.bundle');
 var Bloodhound = require('./typeahead.bundle');
 
 // when created dynamically
-$(document).on('DOMNodeInserted', '.wjb-autocomplete', function (e) {
+$(document).on('DOMNodeInserted', '.wjb-autocomplete-simple', function (e) {
     var target = $(e.target);
-    if(target.hasClass('wjb-autocomplete')) {
+    if(target.hasClass('wjb-autocomplete-simple')) {
         init(target);
     }
 });
 
 // initial page load
-$('.wjb-autocomplete').each(function () {
+$('.wjb-autocomplete-simple').each(function () {
     init($(this));
 });
 

@@ -5,11 +5,14 @@ namespace wjb\AutocompleteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use wjb\AutocompleteBundle\Helper\ObjectToDisplayValueConverter;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AutocompleteController extends AbstractController
 {
-    public function suggestions(Request $request)
+    /**
+     * @Route("/wjb/search", name="wjb_autocomplete_suggestions")
+     */
+    public function suggestionsAction(Request $request)
     {
         $formField = base64_decode($request->get('ff'));
         $formClass = base64_decode($request->get('fc'));
@@ -19,15 +22,16 @@ class AutocompleteController extends AbstractController
             return new JsonResponse([]);
         }
 
+        $objectTransformer = $this->get('wjb_autocomplete.object_transformer');
         $form = $this->createForm($formClass);
         $searchCallable = $form->get($formField)->getConfig()->getOption('search');
         $displayConfig = $form->get($formField)->getConfig()->getOption('display');
 
         $results = $searchCallable($search);
-        $map = array_map(function ($entity) use ($displayConfig) {
+        $map = array_map(function ($entity) use ($displayConfig, $objectTransformer) {
             return [
                 'id' => (string)$entity->getId(),
-                'value' => ObjectToDisplayValueConverter::convertToValue($entity, $displayConfig),
+                'value' => $objectTransformer->convertToValue($entity, $displayConfig),
             ];
         }, $results);
 

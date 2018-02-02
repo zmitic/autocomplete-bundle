@@ -3,8 +3,6 @@
     "type": "symfony-bundle",
     "description": "Autocomplete form type",
     "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "authors": [
         {
             "name": "Zeljko Mitic",
@@ -13,10 +11,7 @@
     ],
     "require": {
         "symfony/framework-bundle": "^3.3|^4.0",
-        "symfony/form": "^3.3|^4.0",
-        "symfony/doctrine-bridge": "^3.3|^4.0",
-        "doctrine/doctrine-bundle": "^1.6",
-        "paragonie/random_compat": ">=2.0 <3.0.0"
+        "symfony/form": "^3.3|^4.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.4",
