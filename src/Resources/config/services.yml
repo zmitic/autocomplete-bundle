@@ -1,4 +1,8 @@
 services:
+    wjb\AutocompleteBundle\Controller\AutocompleteController:
+        arguments: ['@wjb_autocomplete.object_transformer']
+        tags: ['controller.service_arguments']
+
     wjb_autocomplete.autocomplete_entity_type:
         class: wjb\AutocompleteBundle\Form\Type\AutocompleteType
         arguments: ['@wjb_autocomplete.object_transformer', '@?doctrine.orm.entity_manager']
@@ -13,7 +17,6 @@ services:
     wjb_autocomplete.object_transformer:
         class: wjb\AutocompleteBundle\Service\ObjectTransformer
         arguments: ['@property_accessor']
-        public: true
 
 
 

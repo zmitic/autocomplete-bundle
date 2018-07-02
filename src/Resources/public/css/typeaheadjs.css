@@ -36,6 +36,7 @@ span.twitter-typeahead .tt-suggestion:focus {
   text-decoration: none;
   outline: 0;
   background-color: #337ab7;
+  cursor: pointer;
 }
 .input-group.input-group-lg span.twitter-typeahead .form-control {
   height: 46px;

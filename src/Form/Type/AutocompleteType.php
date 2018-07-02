@@ -33,13 +33,13 @@ class AutocompleteType extends AbstractType
     {
         $builder->add('id', HiddenType::class, [
             'attr' => [
-                'data-id' => '',
+                'data-wjb-autocomplete-id' => '',
                 'autocomplete' => 'off',
             ]
         ]);
         $builder->add('value', TextType::class, [
             'attr' => [
-                'data-value' => '',
+                'data-wjb-autocomplete-value' => '',
             ],
             'label' => false,
         ]);
@@ -117,4 +117,3 @@ class AutocompleteType extends AbstractType
         $resolver->setAllowedTypes('debounce', 'int');
     }
 }
-

@@ -1,29 +1,22 @@
 
+
 var $ = require('jquery');
 require('./typeahead.bundle');
 var Bloodhound = require('./typeahead.bundle');
 
-// when created dynamically
-$(document).on('DOMNodeInserted', '.wjb-autocomplete-simple', function (e) {
-    var target = $(e.target);
-    if(target.hasClass('wjb-autocomplete-simple')) {
-        init(target);
-    }
-});
+$(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initialized)', function (event) {
+    console.log('focus');
+    let valueField = $(this);
+    valueField.addClass('autocomplete-initialized');
 
-// initial page load
-$('.wjb-autocomplete-simple').each(function () {
-    init($(this));
-});
+    let wrapper = valueField.closest('.wjb-autocomplete-simple');
 
-function init(element) {
-    var valueField = element.find('[data-value]');
-    var idField = element.find('[data-id]');
+    let idField = wrapper.find('[data-wjb-autocomplete-id]');
 
-    var suggestionsAsString = element.attr('data-suggestions');
-    var suggestions = JSON.parse(suggestionsAsString);
+    let suggestionsAsString = wrapper.attr('data-suggestions');
+    let suggestions = JSON.parse(suggestionsAsString);
 
-    var bloodhoundSuggestions = new Bloodhound({
+    let bloodhoundSuggestions = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         identify: function (match) {
@@ -32,9 +25,9 @@ function init(element) {
         sufficient: 3,
         local: suggestions,
         remote: {
-            url: element.attr('data-remote-url'),
+            url: wrapper.attr('data-remote-url'),
             wildcard: '_QUERY_',
-            rateLimitWait: element.attr('data-debounce')
+            rateLimitWait: wrapper.attr('data-debounce')
         }
     });
 
@@ -60,5 +53,9 @@ function init(element) {
             }
             idField.val('');
         });
-}
+
+    valueField.focus();
+
+});
+
 

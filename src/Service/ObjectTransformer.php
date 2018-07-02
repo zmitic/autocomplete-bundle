@@ -21,7 +21,7 @@ class ObjectTransformer
         }
 
         if (is_callable($display)) {
-            return call_user_func($display, $entity);
+            return $display($entity);
         }
 
         return $this->propertyAccessor->getValue($entity, $display);

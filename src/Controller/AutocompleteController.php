@@ -6,9 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use wjb\AutocompleteBundle\Service\ObjectTransformer;
 
 class AutocompleteController extends AbstractController
 {
+    /** @var ObjectTransformer */
+    private $objectTransformer;
+
+    public function __construct(ObjectTransformer $objectTransformer)
+    {
+        $this->objectTransformer = $objectTransformer;
+    }
+
     /**
      * @Route("/wjb/search", name="wjb_autocomplete_suggestions")
      */
@@ -22,7 +31,8 @@ class AutocompleteController extends AbstractController
             return new JsonResponse([]);
         }
 
-        $objectTransformer = $this->get('wjb_autocomplete.object_transformer');
+//        $objectTransformer = $this->get('wjb_autocomplete.object_transformer');
+        $objectTransformer = $this->objectTransformer;
         $form = $this->createForm($formClass);
         $searchCallable = $form->get($formField)->getConfig()->getOption('search');
         $displayConfig = $form->get($formField)->getConfig()->getOption('display');

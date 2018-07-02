@@ -45,7 +45,7 @@ class AutocompleteTransformer implements DataTransformerInterface
         // try finding entity by id first
         if ($id) {
             $findByIdCallback = $this->options['find_one_by_id'];
-            $entity = call_user_func($findByIdCallback, $id);
+            $entity = $findByIdCallback($id);
             if ($entity) {
                 return $entity;
             }
@@ -53,7 +53,7 @@ class AutocompleteTransformer implements DataTransformerInterface
 
         if ($value) {
             $findByValueCallback = $this->options['find_one_by_value'];
-            $entity = call_user_func($findByValueCallback, $value);
+            $entity = $findByValueCallback($value);
             if ($entity) {
                 return $entity;
             }
@@ -61,7 +61,7 @@ class AutocompleteTransformer implements DataTransformerInterface
 
         $notFoundCallback = $this->options['not_found'];
 
-        return call_user_func($notFoundCallback, $value);
+        return $notFoundCallback($value);
     }
 }
 
