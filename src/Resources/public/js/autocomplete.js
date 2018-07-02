@@ -1,11 +1,9 @@
 
-
-var $ = require('jquery');
+let $ = require('jquery');
 require('./typeahead.bundle');
-var Bloodhound = require('./typeahead.bundle');
+let Bloodhound = require('./typeahead.bundle');
 
 $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initialized)', function (event) {
-    console.log('focus');
     let valueField = $(this);
     valueField.addClass('autocomplete-initialized');
 

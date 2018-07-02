@@ -40,6 +40,7 @@ class AutocompleteType extends AbstractType
         $builder->add('value', TextType::class, [
             'attr' => [
                 'data-wjb-autocomplete-value' => '',
+                'placeholder' => $options['placeholder'],
             ],
             'label' => false,
         ]);
@@ -75,6 +76,8 @@ class AutocompleteType extends AbstractType
             'search',
         ]);
 
+        $resolver->setDefault('placeholder', '');
+
         $resolver->setDefault('find_one_by_id', function (Options $options) {
             return function ($id) use ($options) {
                 if (!$this->entityManager) {
@@ -107,6 +110,7 @@ class AutocompleteType extends AbstractType
             },
         ]);
 
+        $resolver->setAllowedTypes('placeholder', ['string', 'null']);
         $resolver->setAllowedTypes('class', ['string', 'null']);
         $resolver->setAllowedTypes('display', ['string', 'null', 'callable']);
         $resolver->setAllowedTypes('search', 'callable');
