@@ -90,9 +90,12 @@ class AutocompleteType extends AbstractType
         });
 
         $resolver->setDefaults([
+            'attr' => [
+                'class' => 'wjb-autocomplete-simple',
+            ],
             'class' => null,
             'display' => null,
-            'debounce' => 300,
+            'debounce' => 100,
             'error_mapping' => [
                 '.' => 'value',
             ],
