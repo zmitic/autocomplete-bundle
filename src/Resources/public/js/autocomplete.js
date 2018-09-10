@@ -7,7 +7,7 @@ $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initi
     let valueField = $(this);
     valueField.addClass('autocomplete-initialized');
 
-    let wrapper = valueField.closest('.wjb-autocomplete-simple');
+    let wrapper = valueField.closest('[data-wjb-autocomplete-wrapper]');
 
     let idField = wrapper.find('[data-wjb-autocomplete-id]');
 
