@@ -5,11 +5,10 @@
          data-debounce="{{ form.vars.debounce }}"
          data-remote-url="{{ path('wjb_autocomplete_suggestions', {'search': '_QUERY_', 'fc': form.vars.form_class, 'ff': form.vars.form_field}) }}"
          data-suggestions='{{ suggestions|json_encode }}'
-
-            {{ block('widget_attributes') }}
     >
 
-        {{ form_rest(form) }}
+        {{ form_widget(form.value) }}
+        {{ form_widget(form.id) }}
 
     </div>
 {% endblock autocomplete_widget %}
