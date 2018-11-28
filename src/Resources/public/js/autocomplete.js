@@ -45,7 +45,6 @@ $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initi
             idField.val(datum.id);
         })
         .bind('paste keyup submit', function (event) {
-            event.preventDefault();
             if (event.keyCode === 13) {
                 return;
             }
