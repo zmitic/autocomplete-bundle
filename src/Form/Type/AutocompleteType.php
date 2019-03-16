@@ -39,6 +39,7 @@ class AutocompleteType extends AbstractType
         ]);
         $builder->add('value', TextType::class, [
             'attr' => [
+                'autocomplete' => 'off',
                 'data-wjb-autocomplete-value' => '',
                 'placeholder' => $options['placeholder'],
             ],
