@@ -38,7 +38,8 @@ $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initi
         {
             name: 'suggestions',
             displayKey: 'value',
-            source: bloodhoundSuggestions
+            source: bloodhoundSuggestions,
+            limit: 12
         })
         .bind('typeahead:select', function (event, datum) {
             event.preventDefault();
