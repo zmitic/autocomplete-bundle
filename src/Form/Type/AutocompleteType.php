@@ -2,6 +2,7 @@
 
 namespace wjb\AutocompleteBundle\Form\Type;
 
+use function array_merge;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -37,13 +38,14 @@ class AutocompleteType extends AbstractType
                 'autocomplete' => 'off',
             ]
         ]);
+
+        $attributes = array_merge($options['attr'], [
+            'autocomplete' => 'off',
+            'data-wjb-autocomplete-value' => '',
+        ]);
         $builder->add('value', TextType::class, [
             'required' => false,
-            'attr' => [
-                'autocomplete' => 'off',
-                'data-wjb-autocomplete-value' => '',
-                'placeholder' => $options['placeholder'],
-            ],
+            'attr' => $attributes,
             'label' => false,
         ]);
         $builder->addModelTransformer(new AutocompleteTransformer($options, $this->objectTransformer));
@@ -121,5 +123,6 @@ class AutocompleteType extends AbstractType
         $resolver->setAllowedTypes('find_one_by_value', 'callable');
         $resolver->setAllowedTypes('not_found', 'callable');
         $resolver->setAllowedTypes('debounce', 'int');
+        $resolver->setDeprecated('placeholder');
     }
 }
