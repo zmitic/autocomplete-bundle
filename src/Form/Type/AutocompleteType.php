@@ -40,7 +40,7 @@ class AutocompleteType extends AbstractType
         ]);
 
         $attributes = array_merge($options['attr'], [
-            'autocomplete' => 'off',
+            'autocomplete' => 'new-password',
             'data-wjb-autocomplete-value' => '',
         ]);
         $builder->add('value', TextType::class, [
