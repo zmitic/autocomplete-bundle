@@ -45,7 +45,7 @@ class AutocompleteType extends AbstractType
             'data-wjb-autocomplete-value' => '',
         ]);
         $builder->add('value', SearchType::class, [
-            'required' => false,
+            'required' => $options['required'],
             'attr' => $attributes,
             'label' => false,
         ]);
