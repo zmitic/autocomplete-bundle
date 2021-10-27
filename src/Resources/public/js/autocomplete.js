@@ -5,6 +5,7 @@ let Bloodhound = require('./typeahead.bundle');
 
 $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initialized)', function (event) {
     let valueField = $(this);
+
     valueField.addClass('autocomplete-initialized');
 
     let wrapper = valueField.closest('[data-wjb-autocomplete-wrapper]');
@@ -42,11 +43,13 @@ $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initi
             limit: 12
         })
         .bind('typeahead:select', function (event, datum) {
+            console.log('selected');
             event.preventDefault();
             idField.val(datum.id);
         })
         .bind('paste keyup submit', function (event) {
-            if (event.keyCode === 13) {
+            // ignore enter and tab keys
+            if (event.keyCode === 13 || event.keyCode === 9) {
                 return;
             }
             idField.val('');
@@ -55,5 +58,3 @@ $(document).on('focusin', '[data-wjb-autocomplete-value]:not(.autocomplete-initi
     valueField.focus();
 
 });
-
-
