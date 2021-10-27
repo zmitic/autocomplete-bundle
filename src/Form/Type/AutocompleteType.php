@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use wjb\AutocompleteBundle\Form\Transformer\AutocompleteTransformer;
 use wjb\AutocompleteBundle\Service\ObjectTransformer;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 
 class AutocompleteType extends AbstractType
 {
@@ -43,8 +44,8 @@ class AutocompleteType extends AbstractType
             'autocomplete' => 'off',
             'data-wjb-autocomplete-value' => '',
         ]);
-        $builder->add('value', TextType::class, [
-            'required' => false,
+        $builder->add('value', SearchType::class, [
+            'required' => $options['required'],
             'attr' => $attributes,
             'label' => false,
         ]);

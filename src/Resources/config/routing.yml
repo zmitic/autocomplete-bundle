@@ -1,3 +1,0 @@
-wjb_autocomplete_suggestions:
-    path:     /wjb/autocomplete/suggestions
-    controller: wjb\AutocompleteBundle\Controller\AutocompleteController::suggestionsAction
