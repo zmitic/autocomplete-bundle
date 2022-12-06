@@ -2,7 +2,7 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
-        "bloodhound-js": "^1.2.2",
+        "bloodhound-js": "^1.2.3",
         "bootstrap-sass": "^3.3.7",
         "corejs-typeahead": "^1.2.1",
         "jquery": "latest",
